@@ -1,7 +1,8 @@
 name: create-comment
 
 on:
-    push
+    issues: 
+      types: [opened]
 
 
 jobs:
@@ -12,4 +13,7 @@ jobs:
             uses: peter-evans/create-or-update-comment@v3
             with:
                 comment-id: 1692127283
-                reactions: +1  
+                reactions: |
+                  heart
+                  hooray
+                  laugh     
