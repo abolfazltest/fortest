@@ -1,18 +1,34 @@
-name: create-comment
+name: Comment Reaction
 
 on:
-    push
-
+  issue_comment:
+    types: [created]
 
 jobs:
-    comment-with-action:
-        runs-on: ubuntu-latest
-        steps:
-          - name: Add reactions
-            uses: peter-evans/create-or-update-comment@v3
-            with:
-                comment-id: 1692127283
-                reactions: |
-                  heart
-                  hooray
-                  laugh     
+  add_reaction:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if comment contains trigger phrase
+        id: check-comment
+        uses: actions/github-script@v5
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const triggerPhrases = ['@bot', 'ping']; // لیست عبارات مورد نظر برای شناسایی کامنت‌ها
+            const comment = context.payload.comment.body.toLowerCase();
+            const containsTrigger = triggerPhrases.some(phrase => comment.includes(phrase));
+            return { containsTrigger };
+
+      - name: Add reaction if trigger phrase found
+        if: steps.check-comment.outputs.containsTrigger == true
+        uses: actions/github-script@v5
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const reaction = 'heart'; // نوع ری‌اکشن مورد نظرتان
+            await octokit.reactions.createForIssueComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: context.payload.comment.id,
+              content: reaction,
+            });
