@@ -14,7 +14,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const triggerPhrases = ['@bot', 'ping']; // لیست عبارات مورد نظر برای شناسایی کامنت‌ها
+            const triggerPhrases = ['hello']; // لیست عبارات مورد نظر برای شناسایی کامنت‌ها
             const comment = context.payload.comment.body.toLowerCase();
             const containsTrigger = triggerPhrases.some(phrase => comment.includes(phrase));
             return { containsTrigger };
@@ -31,4 +31,5 @@ jobs:
               repo: context.repo.repo,
               comment_id: context.payload.comment.id,
               content: reaction,
+              console.log(reaction)
             });
