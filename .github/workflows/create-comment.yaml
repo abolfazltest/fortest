@@ -12,7 +12,4 @@ jobs:
             uses: peter-evans/create-or-update-comment@v3
             with:
                 comment-id: 1692127283
-                reactions: |
-                  heart
-                  hooray
-                  laugh     
+                reactions: +1  
