@@ -1,8 +1,7 @@
 name: create-comment
 
 on:
-    issues: 
-      types: [opened]
+    push
 
 
 jobs:
