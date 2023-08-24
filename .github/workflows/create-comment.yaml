@@ -31,5 +31,5 @@ jobs:
               repo: context.repo.repo,
               comment_id: context.payload.comment.id,
               content: reaction,
-              console.log(reaction)
             });
+            console.log(reaction);
