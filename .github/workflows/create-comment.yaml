@@ -20,8 +20,8 @@ jobs:
             return { containsTrigger };
 
       - name: Add reaction if trigger phrase found
-        if: steps.check-comment.outputs.containsTrigger == false
-        uses: actions/github-script@v5
+        if: steps.check-comment.outputs.containsTrigger == true
+        uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
